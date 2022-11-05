@@ -1,0 +1,57 @@
+drop table departament;
+drop table employee;
+
+create table departament (id serial primary key, 
+						  name varchar(100), 
+						  isProfit boolean);
+
+insert into departament (name, isProfit) 
+values ('accounting', false);
+insert into departament (name, isProfit) 
+values ('credit', true);
+insert into departament (name, isProfit) 
+values ('sales', true);
+insert into departament (name, isProfit) 
+values ('management', true);
+select * from departament;
+
+create table employee (id serial primary key, 
+						  full_name varchar(100), 
+						  salary int, 
+					   	  departament_id int, 
+					   constraint deptId foreign key (departament_id) references departament(id));
+
+insert into employee(full_name, salary, departament_id)
+values ('Petrov Ivan', 30000, 3);
+insert into employee(full_name, salary, departament_id)
+values ('Ivaniva Natalya', 50000, 1);
+insert into employee(full_name, salary, departament_id)
+values ('Mirskih Petr', 100000, 4);
+insert into employee(full_name, salary, departament_id)
+values ('Ulyukaev Vladimir', 200000, 4);
+insert into employee(full_name, salary, departament_id)
+values ('Zamorskiy Viktor', 70000, 2);
+
+select * from employee where departament_id = 4;
+
+select sum (salary) as salary_amount from employee;
+
+select e.full_name, d.isProfit
+from employee e inner join departament d on e.departament_id = d.id;
+
+select * from employee 
+where salary between 10000 and 100000
+
+delete from employee where id = 3;
+
+update departament set name = 'Deposite', isProfit = false
+
+select * from employee
+where lower(full_name) ILIKE '%van%';
+
+select d.name, avg(salary)::numeric(10,2) as average_salary
+from employee e inner join departament d on e.departament_id = d.id
+group by d.name
+
+drop table departament;
+drop table employee;
